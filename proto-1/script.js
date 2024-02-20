@@ -28,6 +28,7 @@ function createHexagonWithOverlay(id) {
 
     hexagon.addEventListener("click", function() {
         overlay.style.display = "block";
+        console.log(`Hexagon "${id}" clicked`);
     });
 
     overlay.addEventListener("click", function(event) {
@@ -40,7 +41,7 @@ function createHexagonWithOverlay(id) {
         const color = document.getElementById(`${id}-color`).value;
         const url = document.getElementById(`${id}-url`).value;
         const toggled = document.getElementById(`${id}-toggle`).checked;
-        console.log("Submitted:", { id, color, url, toggled });
+        console.log(`Form submitted for hexagon "${id}":`, { color, url, toggled });
     });
 
     return hexagon;
@@ -48,6 +49,7 @@ function createHexagonWithOverlay(id) {
 
 // Function to arrange hexagons with overlay panels hierarchically
 function arrangeHexagonsWithOverlays() {
+    console.log("Arranging hexagons with overlays...");
     // Clear previous hexagons
     document.getElementById("hexContainer").innerHTML = "";
 
@@ -70,6 +72,7 @@ function arrangeHexagonsWithOverlays() {
 
 // Function to draw a line with label between two points
 function drawLine(start, end, label) {
+    console.log(`Drawing line from (${start.x}, ${start.y}) to (${end.x}, ${end.y}) with label "${label}"`);
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("class", "line-svg");
     const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
@@ -91,4 +94,7 @@ function drawLine(start, end, label) {
 }
 
 // Call the function to arrange hexagons with overlays when the page loads
-window.onload = arrangeHexagonsWithOverlays;
+window.onload = function() {
+    console.log("Page loaded");
+    arrangeHexagonsWithOverlays();
+};
