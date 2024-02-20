@@ -1,0 +1,74 @@
+/* styles_dark.css */
+
+body {
+    background-color: #222;
+    color: #fff;
+}
+
+.hexagon {
+    position: absolute;
+    width: 100px;
+    height: 55px; /* Adjust as needed */
+    background-color: #444;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    cursor: pointer;
+    z-index: 1;
+}
+
+.overlay {
+    position: absolute;
+    width: 200px;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 2;
+}
+
+.overlay-content {
+    text-align: left;
+}
+
+.overlay-content label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.overlay-content select,
+.overlay-content input[type="text"],
+.overlay-content input[type="checkbox"] {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: none;
+    background-color: #666;
+    color: #fff;
+}
+
+.overlay-content button {
+    padding: 8px 16px;
+    border: none;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+}
+
+.overlay-content button:hover {
+    background-color: #555;
+}
+
+.line-svg {
+    position: absolute;
+    z-index: 0;
+}
+
+.line-svg line {
+    stroke: #999;
+    stroke-width: 2;
+}
+
+.line-svg text {
+    fill: #fff;
+    font-size: 14px;
+}
