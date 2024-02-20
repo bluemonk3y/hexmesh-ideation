@@ -1,57 +1,64 @@
 /* styles_dark.css */
 
-body {
-    background-color: #222;
-    color: #fff;
+#hexContainer {
+    position: relative;
+    width: 1200px; /* Twice the original width */
+    height: 1200px; /* Twice the original height */
+    background-color: #000; /* Black background */
 }
 
 .hexagon {
     position: absolute;
-    width: 100px;
-    height: 55px; /* Adjust as needed */
-    background-color: #444;
+    width: 200px; /* Adjusted size */
+    height: 115.48px; /* Adjusted size */
+    background-color: #666; /* Grey hexagons */
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    cursor: pointer;
-    z-index: 1;
+    /* Other styling properties */
 }
 
 .overlay {
     position: absolute;
-    width: 200px;
+    width: 200px; /* Adjusted size */
     height: auto;
     background-color: rgba(0, 0, 0, 0.8);
     color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    z-index: 2;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 10;
 }
 
 .overlay-content {
     text-align: left;
+    background-color: #666;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .overlay-content label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
+    font-size: 14px;
 }
 
 .overlay-content select,
 .overlay-content input[type="text"],
 .overlay-content input[type="checkbox"] {
-    width: 100%;
+    width: calc(100% - 20px);
     padding: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     border: none;
-    background-color: #666;
+    background-color: #999;
     color: #fff;
+    font-size: 14px;
 }
 
 .overlay-content button {
-    padding: 8px 16px;
+    padding: 5px 10px;
     border: none;
     background-color: #333;
     color: #fff;
     cursor: pointer;
+    font-size: 14px;
 }
 
 .overlay-content button:hover {
@@ -70,5 +77,5 @@ body {
 
 .line-svg text {
     fill: #fff;
-    font-size: 14px;
+    font-size: 12px;
 }

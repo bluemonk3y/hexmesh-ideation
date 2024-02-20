@@ -1,4 +1,4 @@
-// Define a function to create a hexagon with form and overlay panel
+// Function to create a hexagon with form and overlay panel
 function createHexagonWithOverlay(id) {
     const hexagon = document.createElement("div");
     hexagon.classList.add("hexagon");
@@ -35,7 +35,7 @@ function createHexagonWithOverlay(id) {
         event.stopPropagation(); // Prevent clicks inside the overlay from closing it
     });
 
-    const submitButton = document.getElementById(`${id}-submit`);
+    const submitButton = overlay.querySelector(`#${id}-submit`);
     submitButton.addEventListener("click", function(event) {
         event.preventDefault();
         const color = document.getElementById(`${id}-color`).value;
@@ -47,54 +47,59 @@ function createHexagonWithOverlay(id) {
     return hexagon;
 }
 
-// Function to arrange hexagons with overlay panels hierarchically
-function arrangeHexagonsWithOverlays() {
-    console.log("Arranging hexagons with overlays...");
-    // Clear previous hexagons
-    document.getElementById("hexContainer").innerHTML = "";
+// Function to arrange hexagons with overlay panels in a circle
+function arrangeHexagonsInCircle(centerX, centerY, radius, numHexagons) {
+    console.log("Arranging hexagons in a circle...");
 
-    // Example: Creating 10 hexagons with overlays in a hierarchical arrangement
     const hexagonCoordinates = [];
-    for (let i = 0; i < 10; i++) {
+    const angleIncrement = (2 * Math.PI) / numHexagons;
+    // Create and append the center hexagon
+    const centerHexagon = createHexagonWithOverlay("centerHex");
+    centerHexagon.style.left = centerX - 75 + "px"; // Adjust for hexagon width
+    centerHexagon.style.top = centerY - 43.3 + "px"; // Adjust for hexagon height
+    document.getElementById("hexContainer").appendChild(centerHexagon);
+
+    for (let i = 0; i < numHexagons - 1; i++) {
+        const angle = i * angleIncrement;
+        const x = centerX + radius * Math.cos(angle);
+        const y = centerY + radius * Math.sin(angle);
         const hexagon = createHexagonWithOverlay("hex" + i);
-        hexagon.style.left = i * 100 + "px"; // Adjust position as needed
-        hexagon.style.top = i * 50 + "px"; // Adjust position as needed
+        hexagon.style.left = x - 75 + "px"; // Adjust for hexagon width
+        hexagon.style.top = y - 43.3 + "px"; // Adjust for hexagon height
         document.getElementById("hexContainer").appendChild(hexagon);
+        hexagonCoordinates.push({ x, y });
 
-        // Store the coordinates of each hexagon
-        hexagonCoordinates.push({ x: i * 100, y: i * 50 });
+        // Add outer class to hexagons that are beyond the center circle
+        if (radius > 200) { // Adjust as needed for the circle size
+            hexagon.classList.add("hexagon-outer");
+        }
     }
-
-    // Draw lines between specific hexagons
-    drawLine(hexagonCoordinates[0], hexagonCoordinates[1], "Label 1");
-    drawLine(hexagonCoordinates[2], hexagonCoordinates[3], "Label 2");
 }
 
-// Function to draw a line with label between two points
-function drawLine(start, end, label) {
-    console.log(`Drawing line from (${start.x}, ${start.y}) to (${end.x}, ${end.y}) with label "${label}"`);
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.setAttribute("class", "line-svg");
-    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    line.setAttribute("x1", start.x + 50); // Adjust for hexagon width
-    line.setAttribute("y1", start.y + 25); // Adjust for hexagon height
-    line.setAttribute("x2", end.x + 50); // Adjust for hexagon width
-    line.setAttribute("y2", end.y + 25); // Adjust for hexagon height
-    svg.appendChild(line);
+// Function to calculate and set the height of the hex container
+function setHexContainerHeight() {
+    const hexContainer = document.getElementById("hexContainer");
+    const hexagons = hexContainer.querySelectorAll(".hexagon");
 
-    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    text.setAttribute("x", (start.x + end.x) / 2);
-    text.setAttribute("y", (start.y + end.y) / 2);
-    text.setAttribute("text-anchor", "middle");
-    text.setAttribute("alignment-baseline", "central");
-    text.textContent = label;
-    svg.appendChild(text);
+    let maxHeight = 0;
+    hexagons.forEach(hexagon => {
+        const rect = hexagon.getBoundingClientRect();
+        const height = rect.top + rect.height; // Calculate the total height including top position
+        if (height > maxHeight) {
+            maxHeight = height;
+        }
+    });
 
-    document.getElementById("hexContainer").appendChild(svg);
+    hexContainer.style.height = maxHeight + "px";
 }
 
-// Call the function to arrange hexagons with overlays when the page loads
+// Call the function to arrange hexagons in a circle when the page loads
 window.onload = function() {
     console.log("Page loaded");
-    arrangeHexagonsWithOverlays();
+    const centerX = 300; // Adjust as needed
+    const centerY = 300; // Adjust as needed
+    const radius = 250; // Adjusted size
+    const numHexagons = 12; // Number of hexagons around the circle
+    arrangeHexagonsInCircle(centerX, centerY, radius, numHexagons);
+    setHexContainerHeight(); // Set the height of the hex container
 };
